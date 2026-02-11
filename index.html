@@ -12,9 +12,7 @@
       margin: 0;
     }
 
-    h1 {
-      font-size: 40px;
-    }
+    h1 { font-size: 40px; }
 
     button {
       padding: 15px 30px;
@@ -26,16 +24,9 @@
       transition: 0.3s;
     }
 
-    .yes-button {
-      background-color: hotpink;
-      color: white;
-    }
+    .yes-button { background-color: hotpink; coloror: white; }
+    .no-button { background-color: lightgray; }
 
-    .no-button {
-      background-color: lightgray;
-    }
-
-    /* Love message */
     .love-message {
       font-size: 25px;
       margin-top: 50px;
@@ -51,7 +42,6 @@
       font-weight: bold;
     }
 
-    /* Floating hearts */
     .heart {
       position: absolute;
       font-size: 24px;
@@ -59,75 +49,101 @@
     }
 
     @keyframes floatUp {
-      from {
-        transform: translateY(100vh);
-        opacity: 1;
-      }
-      to {
-        transform: translateY(-10vh);
-        opacity: 0;
-      }
+      from { transform: translateY(100vh); opacity: 1; }
+      to { transform: translateY(-10vh); opacity: 0; }
     }
   </style>
 </head>
 <body>
 
-  <h1>Will you be my Valentine, D C Shaheena? ❤️</h1>
+<h1>Will you be my Valentine, D C Shaheena? ❤️</h1>
 
-  <button class="yes-button" onclick="handleYesClick()">Yes</button>
-  <button class="no-button" onclick="handleNoClick()">No</button>
+<button class="yes-button" onclick="handleYesClick()">Yes</button>
+<button class="no-button" onclick="handleNoClick()">No</button>
 
-  <div id="loveText" class="love-message">
-    Love you D C Shaheena ❤️<br>
-    I hope we will meet soon 💕
-  </div>
+<div id="loveText" class="love-message">
+  Love you D C Shaheena ❤️<br>
+  I hope we will meet soon 💕
+</div>
 
-  <!-- Background Music -->
-  <audio id="bgMusic">
-    <source src="priyathama.mp3" type="audio/mpeg">
-  </audio>
+<!-- YES Song -->
+<audio id="yesMusic">
+  <source src="priyathama.mp3" type="audio/mpeg">
+</audio>
 
-  <!-- Confetti -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<!-- NO Song -->
+<audio id="noMusic">
+  <source src="Yendhukae Nannodhilaavu.mp3" type="audio/mpeg">
+</audio>
 
-  <script>
-    let messageIndex = 0;
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-    const messages = [
-      "Are you sure?",
-      "Think again 😅",
-      "Please? 🥺",
-      "Last chance!",
-      "You can't escape 😈"
-    ];
+<script>
+let messageIndex = 0;
 
-    function handleNoClick() {
-      const noButton = document.querySelector('.no-button');
-      const yesButton = document.querySelector('.yes-button');
+const messages = [
+  "Are you sure?",
+  "Think again 😅",
+  "Please? 🥺",
+  "Last chance!",
+  "You can't escape 😈"
+];
 
-      noButton.textContent = messages[messageIndex];
-      messageIndex = (messageIndex + 1) % messages.length;
+function stopAllMusic() {
+  const yesMusic = document.getElementById("yesMusic");
+  const noMusic = document.getElementById("noMusic");
+  yesMusic.pause();
+  noMusic.pause();
+  yesMusic.currentTime = 0;
+  noMusic.currentTime = 0;
+}
 
-      const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
-      yesButton.style.fontSize = `${currentSize * 1.3}px`;
-    }
+function handleNoClick() {
+  const noButton = document.querySelector('.no-button');
+  const yesButton = document.querySelector('.yes-button');
 
-    function handleYesClick() {
-      document.querySelector('.yes-button').style.display = "none";
-      document.querySelector('.no-button').style.display = "none";
-      document.querySelector('h1').style.display = "none";
+  noButton.textContent = messages[messageIndex];
+  messageIndex = (messageIndex + 1) % messages.length;
 
-      const loveText = document.getElementById("loveText");
-      loveText.classList.add("show");
+  const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+  yesButton.style.fontSize = `${currentSize * 1.3}px`;
 
-      // Play music (strong autoplay handling)
-      const music = document.getElementById("bgMusic");
-      music.volume = 0.8;
-      music.currentTime = 0;
-      music.play().catch(e => console.log("Play failed:", e));
+  stopAllMusic();
+  const noMusic = document.getElementById("noMusic");
+  noMusic.volume = 0.8;
+  noMusic.play().catch(e => console.log(e));
+}
 
-      // Confetti explosion
-      confetti({
-        particleCount: 250,
-        spread: 150,
-        origin: { y: 0.6 }
+function handleYesClick() {
+  document.querySelector('.yes-button').style.display = "none";
+  document.querySelector('.no-button').style.display = "none";
+  document.querySelector('h1').style.display = "none";
+
+  const loveText = document.getElementById("loveText");
+  loveText.classList.add("show");
+
+  stopAllMusic();
+  const yesMusic = document.getElementById("yesMusic");
+  yesMusic.volume = 0.8;
+  yesMusic.play().catch(e => console.log(e));
+
+  confetti({
+    particleCount: 250,
+    spread: 150,
+    origin: { y: 0.6 }
+  });
+
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 20 + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 4000);
+  }, 300);
+}
+</script>
+
+</body>
+</html>
