@@ -8,9 +8,12 @@
       font-family: Arial, sans-serif;
       background: #ffe6f0;
       padding-top: 100px;
+      overflow: hidden;
     }
 
-    h1 { font-size: 40px; }
+    h1 {
+      font-size: 40px;
+    }
 
     button {
       padding: 15px 30px;
@@ -21,16 +24,43 @@
       margin: 10px;
     }
 
-    .yes-button { background-color: hotpink; color: white; }
-    .no-button { background-color: lightgray; }
+    .yes-button {
+      background-color: hotpink;
+      color: white;
+    }
+
+    .no-button {
+      background-color: lightgray;
+    }
+
+    /* Hidden love message */
+    .love-message {
+      font-size: 20px;
+      margin-top: 50px;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 0.8s ease;
+    }
+
+    .show {
+      opacity: 1;
+      transform: scale(2);
+      color: red;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
 
-  <h1>Will you be my Valentine D C Shaheena? ❤️</h1>
+  <h1>Will you be my Valentine, Shaheena? ❤️</h1>
 
   <button class="yes-button" onclick="handleYesClick()">Yes</button>
   <button class="no-button" onclick="handleNoClick()">No</button>
+
+  <div id="loveText" class="love-message">
+    Love you Shaheena ❤️<br>
+    I hope we will meet soon 💕
+  </div>
 
   <script>
     let messageIndex = 0;
@@ -55,7 +85,12 @@
     }
 
     function handleYesClick() {
-      window.location.href = "yes.html";
+      document.querySelector('.yes-button').style.display = "none";
+      document.querySelector('.no-button').style.display = "none";
+      document.querySelector('h1').style.display = "none";
+
+      const loveText = document.getElementById("loveText");
+      loveText.classList.add("show");
     }
   </script>
 
