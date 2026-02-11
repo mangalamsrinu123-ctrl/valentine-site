@@ -33,13 +33,13 @@
       background-color: lightgray;
     }
 
-    /* Hidden love message */
+    /* Love message */
     .love-message {
       font-size: 20px;
       margin-top: 50px;
       opacity: 0;
       transform: scale(0.5);
-      transition: all 0.8s ease;
+      transition: all 1s ease;
     }
 
     .show {
@@ -48,19 +48,45 @@
       color: red;
       font-weight: bold;
     }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      font-size: 24px;
+      animation: floatUp 4s linear infinite;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(100vh);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-10vh);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <h1>Will you be my Valentine, Shaheena? ❤️</h1>
+  <h1>Will you be my Valentine, D C Shaheena? ❤️</h1>
 
   <button class="yes-button" onclick="handleYesClick()">Yes</button>
   <button class="no-button" onclick="handleNoClick()">No</button>
 
   <div id="loveText" class="love-message">
-    Love you Shaheena ❤️<br>
+    Love you D C Shaheena ❤️<br>
     I hope we will meet soon 💕
   </div>
+
+  <!-- Background Music -->
+  <audio id="bgMusic">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <script>
     let messageIndex = 0;
@@ -91,6 +117,30 @@
 
       const loveText = document.getElementById("loveText");
       loveText.classList.add("show");
+
+      // Play music
+      document.getElementById("bgMusic").play();
+
+      // Confetti explosion
+      confetti({
+        particleCount: 200,
+        spread: 120,
+        origin: { y: 0.6 }
+      });
+
+      // Floating hearts
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 20 + 20 + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 4000);
+      }, 300);
     }
   </script>
 
