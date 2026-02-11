@@ -9,6 +9,7 @@
       background: #ffe6f0;
       padding-top: 100px;
       overflow: hidden;
+      margin: 0;
     }
 
     h1 {
@@ -22,6 +23,7 @@
       cursor: pointer;
       border-radius: 10px;
       margin: 10px;
+      transition: 0.3s;
     }
 
     .yes-button {
@@ -35,7 +37,7 @@
 
     /* Love message */
     .love-message {
-      font-size: 20px;
+      font-size: 25px;
       margin-top: 50px;
       opacity: 0;
       transform: scale(0.5);
@@ -85,9 +87,7 @@
     <source src="priyathama.mp3" type="audio/mpeg">
   </audio>
 
-  
-
-  <!-- Confetti Library -->
+  <!-- Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <script>
@@ -120,31 +120,14 @@
       const loveText = document.getElementById("loveText");
       loveText.classList.add("show");
 
-      // Play music
-      document.getElementById("bgMusic").play();
+      // Play music (strong autoplay handling)
+      const music = document.getElementById("bgMusic");
+      music.volume = 0.8;
+      music.currentTime = 0;
+      music.play().catch(e => console.log("Play failed:", e));
 
       // Confetti explosion
       confetti({
-        particleCount: 200,
-        spread: 120,
+        particleCount: 250,
+        spread: 150,
         origin: { y: 0.6 }
-      });
-
-      // Floating hearts
-      setInterval(() => {
-        const heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.innerHTML = "❤️";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = Math.random() * 20 + 20 + "px";
-        document.body.appendChild(heart);
-
-        setTimeout(() => {
-          heart.remove();
-        }, 4000);
-      }, 300);
-    }
-  </script>
-
-</body>
-</html>
